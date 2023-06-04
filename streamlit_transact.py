@@ -1,15 +1,17 @@
 import plotly.express as px
 import streamlit as st
-from pyspark.sql import SparkSession
-from pyspark.sql.functions import desc, split
+# from pyspark.sql import SparkSession
+# from pyspark.sql.functions import desc, split
 import matplotlib.pyplot as plt
 import plotly.express as px
-from pyspark.sql.functions import lit
+# from pyspark.sql.functions import lit
 import functools
-from pyspark.sql import DataFrame
+# from pyspark.sql import DataFrame
 import plotly.graph_objects as go
 import pandas as pd
 import pickle
+
+
 
 st.set_page_config(
 	page_title="An Analysis of 100 million+ eCommerce Transactions", layout="wide")
