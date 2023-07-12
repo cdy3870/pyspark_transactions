@@ -91,14 +91,37 @@ def get_sunburst():
 
 	return fig
 
+def get_line():
+	with open("dfs/purch_atp.txt", "rb") as f:
+		purch_atp_df = pickle.load(f)
+
+	purch_atp_df["percent_purchases"] = purch_atp_df["percent_purchases"] * 100
+	purch_atp_df.loc[len(purch_atp_df.index)] = ["ideal value", 100, 0]	
+	fig = px.scatter(purch_atp_df, x="avg_time_to_purchase", y="percent_purchases", color="message_type")
+	# fig.update_layout(height=700, width=700)
+
+	return fig
+
+def get_line_2():
+	with open("dfs/unsub_blocked.txt", "rb") as f:
+		unsub_blocked_df = pickle.load(f)
+
+	unsub_blocked_df.loc[len(unsub_blocked_df.index)] = ["ideal value", 0, 0]	
+	fig = px.scatter(unsub_blocked_df, x="percent_unsubscribed", y="percent_blocked", color="message_type")
+	# fig.update_layout(height=700, width=700)
+
+	return fig
+
+
+
 def main():
 	st.write("Let's see if messages sent out by companies affect the behavior of users.")
+
 	st.write("First, let's see how these messages are broken down and how frequently they're sent.")
 	fig_1, fig_2 = get_frequency()
 	st.plotly_chart(get_sunburst(), use_container_width=True)
 	st.plotly_chart(fig_1, use_container_width=True)
 	st.plotly_chart(fig_2, use_container_width=True)
-
 
 
 	st.write("Next, let's see which messages are being opened.")
@@ -109,10 +132,13 @@ def main():
 	sub_col1, sub_col2 = st.columns(2)
 	st.plotly_chart(get_subject_pies(), use_container_width=True)
 
-	st.write("How often do messages lead to purchases?")
-	st.write("Which types of triggers lead to the most purchases?")
+	# st.write("How often do messages lead to purchases?")
+
+	st.write("Which types of messages lead to the most purchases? \n")
+	st.plotly_chart(get_line(), use_container_width=True)
 
 	st.write("Which types of messages lead to some adverse action?")
+	st.plotly_chart(get_line_2(), use_container_width=True)
 
 
 
